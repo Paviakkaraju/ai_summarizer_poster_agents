@@ -1,0 +1,49 @@
+from tools.linkedin_poster import post_on_linkedin
+from tools.summaries import load_summaries, format_articles_for_prompt, reset_posting_files
+from agents.posting_agent import model, system_prompt
+from config.settings import USERNAME, PASSWORD
+import os
+
+def generate_post(summaries):
+    prompt_with_data = system_prompt + "\n\n" + format_articles_for_prompt(summaries)
+    
+    response = model.generate_content(
+        prompt_with_data,
+        generation_config={
+            "temperature": 0.7,
+            "top_p": 1,
+            "max_output_tokens": 1200
+        }
+    )
+    return response.text.strip()
+
+
+if __name__ == "__main__":
+    try:
+        # Check if final_post.txt already has content
+        if os.path.exists("final_post.txt"):
+            with open("final_post.txt", "r", encoding="utf-8") as f:
+                existing_content = f.read().strip()
+
+            if existing_content:
+                print("⚠️ Post already generated in final_post.txt. Skipping agent run.")
+                post_on_linkedin(username=USERNAME, password=PASSWORD, post_text=existing_content, dry_run=False)
+                # Optionally reset here too, if this was intentional
+                reset_posting_files()
+                exit(0)
+
+        # If final_post.txt is empty, generate new content
+        summaries = load_summaries()
+        post_text = generate_post(summaries)
+        print("\n✅ Generated LinkedIn Post:\n")
+        # print(post_text)
+
+        # Save to file
+        with open("final_post.txt", "w", encoding="utf-8") as f:
+            f.write(post_text)
+
+        post_on_linkedin(username=USERNAME, password=PASSWORD, post_text=post_text, dry_run=False)
+        reset_posting_files()
+
+    except Exception as e:
+        print(f"❌ Error: {e}")

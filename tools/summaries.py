@@ -24,19 +24,22 @@ def store_summary(summary_obj):
     with open(summary_file, "w") as f:
         json.dump(existing, f, indent=2)
         
-def get_all_summaries():
+def load_summaries(json_path="summaries.json"):
+    with open(json_path, "r", encoding="utf-8") as file:
+        return json.load(file)
     
-    """
-    Returns a list of all stored summary objects.
-    """
-    if summary_file.exists():
-        with open(summary_file, "r") as f:
-            return json.load(f)
-    return []
+def format_articles_for_prompt(summaries):
+    return "\n\n".join([
+        f"Title: {item['title']}\nURL: {item['url']}\nSummary: {item['summary']}"
+        for item in summaries
+    ])
+    
+def reset_posting_files():
+    # Reset summaries.json to an empty list
+    with open("summaries.json", "w", encoding="utf-8") as f:
+        f.write("[]")
 
-def clear_summary_file():
-    """
-    Clears the contents of the summary file by overwriting it with an empty JSON array.
-    """
-    if summary_file.exists():
-        summary_file.write_text("[]")
+    # Clear final_post.txt content
+    open("final_post.txt", "w", encoding="utf-8").close()
+
+    print("✅ summaries.json and final_post.txt have been reset.")
