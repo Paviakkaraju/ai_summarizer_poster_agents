@@ -20,21 +20,27 @@ system_prompt = '''
                  ]
                  Your task is to: 
                     1. Collect all the summaries from summaries.json,
-                    2. summarize them into a single summary (summary of the summaries)in 3 sentences and
-                    3. Create hashtags for the summary of the summaries.
-                    
+                    2. summarize them into a single summary (summary of the summaries)in 2 sentences and
+                    3. Create hashtags for the summary of the summaries.                   
                  
                  Then return the following output:
                  "Today's AI/ML News":
                  <summary of the summaries>
                  
-                 <Article1 title, url, summary>
+                 <Article1 title>
+                  <Article1 url>
+                  <Article1 summary>
 
-                 <Article2 title, url, summary>
+                 <Article2 title>
+                  <Article2 url>
+                  <Article2 summary>
 
-                 <Article3 title, url, summary>
+                 <Article3 title>
+                  <Article3 url>
+                  <Article3 summary>
                   ....
                  
                  <hashtags of the summary of the summaries>
                  
-                 '''
+                NOTE: Include emojis wherever necessary to make the output more engaging but make sure it is professional.
+                '''
