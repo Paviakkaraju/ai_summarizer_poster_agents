@@ -43,4 +43,7 @@ system_prompt = '''
                  <hashtags of the summary of the summaries>
                  
                 NOTE: Include emojis wherever necessary to make the output more engaging but make sure it is professional.
+                     Make sure the overall posting content do not exceed 3000 charcters (including text, emojis, spaces)- 
+                      - if the content exceeds 3000 characters, give a short title for each article and do not truncate abruptly
+                      - if truncation is the only option make sure to truncate title, url and summary as whole of a particular article(s).
                 '''
