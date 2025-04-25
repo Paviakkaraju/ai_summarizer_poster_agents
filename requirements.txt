@@ -1,7 +1,8 @@
-phidata
 feedparser
 newspaper3k
 requests
 selenium
 python-dotenv
 google-generativeai
+webdriver-manager
+schedule
