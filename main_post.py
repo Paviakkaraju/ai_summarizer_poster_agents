@@ -1,7 +1,7 @@
-from tools.linkedin_poster import post_on_linkedin
+from tools.linkedin_poster import linkedin
 from tools.summaries import load_summaries, format_articles_for_prompt, reset_posting_files
 from agents.posting_agent import model, system_prompt
-from config.settings import USERNAME, PASSWORD
+from config.settings import profile_path, profile_name
 import os
 
 def generate_post(summaries):
@@ -27,7 +27,7 @@ if __name__ == "__main__":
 
             if existing_content:
                 print("⚠️ Post already generated in final_post.txt. Skipping agent run.")
-                post_on_linkedin(username=USERNAME, password=PASSWORD, post_text=existing_content, dry_run=False)
+                linkedin(post_text=existing_content, profile_path=profile_path, profile_name=profile_name, dry_run=False)
                 # Optionally reset here too, if this was intentional
                 reset_posting_files()
                 exit(0)
@@ -42,7 +42,7 @@ if __name__ == "__main__":
         with open("final_post.txt", "w", encoding="utf-8") as f:
             f.write(post_text)
 
-        post_on_linkedin(username=USERNAME, password=PASSWORD, post_text=post_text, dry_run=False)
+        linkedin(post_text=post_text, profile_path=profile_path, profile_name=profile_name, dry_run=False)
         reset_posting_files()
 
     except Exception as e:
