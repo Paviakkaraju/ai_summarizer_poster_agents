@@ -10,9 +10,9 @@
 ```
 AI_SUMMARIZER_POSTER/
 │
-├── agents/
-│   ├── posting_agent.py          # LLM - Prepares the LinkedIn post content
-│   └── summarizing_agent.py      # LLM -Summarizes scraped articles
+├── llms/
+│   ├── posting.py          # Prepares the LinkedIn post content
+│   └── summarizing.py      # Summarizes scraped articles
 │
 ├── config/
 │   └── settings.py               # Project settings and configurations
@@ -41,9 +41,9 @@ The workflow is divided into two parts:
 
 Part 1: Scrape and Summarize
 * Scrape latest AI/ML news and updates using the web_scraper.py.
-* Summarize the scraped content with the help of LLMs (summarizing_agent.py).
+* Summarize the scraped content with the help of LLMs (summarizing.py).
 * Save the summaries into a JSON file (summaries.json).
 
 Part 2: Create and Post on LinkedIn
-* Combine all summaries to generate a LinkedIn post with appropriate hashtags using another LLM (posting_agent.py).
+* Combine all summaries to generate a LinkedIn post with appropriate hashtags using another LLM (posting.py).
 * Post the crafted content directly on LinkedIn through the LinkedIn API (linkedin_poster.py).
