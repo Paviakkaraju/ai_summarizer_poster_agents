@@ -1,4 +1,4 @@
-from agents.summarizing_agent import system_prompt, model
+from llms.summarizing import system_prompt, model
 from tools.web_scraper import get_aiml_updates_yesterday, extract_article_text
 from tools.summaries import store_summary
 import time

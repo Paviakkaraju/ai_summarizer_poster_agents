@@ -1,6 +1,6 @@
 from tools.linkedin_poster import linkedin
 from tools.summaries import load_summaries, format_articles_for_prompt, reset_posting_files
-from agents.posting_agent import model, system_prompt
+from llms.posting import model, system_prompt
 from config.settings import profile_path, profile_name
 import os
 
