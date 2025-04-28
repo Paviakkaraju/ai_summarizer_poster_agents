@@ -16,7 +16,7 @@ def linkedin(post_text, profile_path, profile_name, dry_run=True):
         dry_run (bool): If True, inserts content but does not click 'Post'.
     """
 
-    # === 🛠 Customize Chrome setup ===
+    
     PROFILE_NAME = profile_name
     PROFILE_PATH = profile_path
 
@@ -36,12 +36,12 @@ def linkedin(post_text, profile_path, profile_name, dry_run=True):
         print("🌐 Opening LinkedIn...")
         driver.get("https://www.linkedin.com/feed/")
 
-        # Wait for the "Start a post" button and click it
+        
         start_post = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[contains(., 'Start a post')]")))
         start_post.click()
         print("📝 Opening post editor...")
 
-        # Wait for editor and insert content
+       
         editor = wait.until(EC.presence_of_element_located((By.CLASS_NAME, "ql-editor")))
         escaped_text = post_text.replace("`", "\\`")
         driver.execute_script(f"arguments[0].innerHTML = `{escaped_text}`;", editor)

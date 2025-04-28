@@ -13,7 +13,7 @@ def job():
     subprocess.run([python_path, post_path])
     
 
-schedule.every().day.at("08:30").do(job)
+schedule.every().day.at("09:30").do(job)
 
 while True:
     schedule.run_pending()

@@ -5,9 +5,6 @@ from config.settings import GOOGLE_API_KEY
 
 genai.configure(api_key=GOOGLE_API_KEY)
 
-#for m in genai.list_models():
-    #print(m.name, "→", m.supported_generation_methods)
-
 model = genai.GenerativeModel("gemini-1.5-pro-latest")
 
 system_prompt = '''You are an autonomous AI summarizing agent designed to assist with AI/ML news updates." 
