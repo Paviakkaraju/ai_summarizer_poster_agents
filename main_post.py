@@ -1,4 +1,4 @@
-from tools.linkedin_poster import linkedin
+from tools.linkedin_poster import linkedin_post
 from tools.summaries import load_summaries, format_articles_for_prompt, reset_posting_files
 from llms.posting import model, system_prompt
 from config.settings import profile_path, profile_name
@@ -27,7 +27,7 @@ if __name__ == "__main__":
 
             if existing_content:
                 print("⚠️ Post already generated in final_post.txt. Skipping agent run.")
-                linkedin(post_text=existing_content, profile_path=profile_path, profile_name=profile_name, dry_run=False)
+                linkedin_post(post_text=existing_content, profile_path=profile_path, profile_name=profile_name, dry_run=False, headless=True)
                 # Optionally reset here too, if this was intentional
                 reset_posting_files()
                 exit(0)
@@ -42,7 +42,7 @@ if __name__ == "__main__":
         with open("final_post.txt", "w", encoding="utf-8") as f:
             f.write(post_text)
 
-        linkedin(post_text=post_text, profile_path=profile_path, profile_name=profile_name, dry_run=False)
+        linkedin_post(post_text=post_text, profile_path=profile_path, profile_name=profile_name, dry_run=False, headless=True)
         reset_posting_files()
 
     except Exception as e:

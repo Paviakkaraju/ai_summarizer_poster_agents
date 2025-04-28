@@ -7,16 +7,18 @@ from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 import time
 
-def linkedin(post_text, profile_path, profile_name, dry_run=True):
+def linkedin_post(post_text, profile_path, profile_name, dry_run=True, headless=True):
     """
     Opens LinkedIn in your real Chrome profile and creates a post using Selenium.
 
     Args:
         post_text (str): The content to post (supports emojis and formatting).
+        profile_path (str): Path to Chrome user data directory.
+        profile_name (str): Profile directory name.
         dry_run (bool): If True, inserts content but does not click 'Post'.
+        headless (bool): If True, runs Chrome in headless mode.
     """
 
-    
     PROFILE_NAME = profile_name
     PROFILE_PATH = profile_path
 
@@ -26,9 +28,10 @@ def linkedin(post_text, profile_path, profile_name, dry_run=True):
     options.add_argument("--start-maximized")
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--no-sandbox")
-    options.add_experimental_option("detach", True)
+    if headless:
+        options.add_argument("--headless=new") 
+        options.add_argument("--window-size=1920,1080")  
 
-    
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
     wait = WebDriverWait(driver, 15)
 
@@ -36,12 +39,10 @@ def linkedin(post_text, profile_path, profile_name, dry_run=True):
         print("🌐 Opening LinkedIn...")
         driver.get("https://www.linkedin.com/feed/")
 
-        
         start_post = wait.until(EC.element_to_be_clickable((By.XPATH, "//button[contains(., 'Start a post')]")))
         start_post.click()
         print("📝 Opening post editor...")
 
-       
         editor = wait.until(EC.presence_of_element_located((By.CLASS_NAME, "ql-editor")))
         escaped_text = post_text.replace("`", "\\`")
         driver.execute_script(f"arguments[0].innerHTML = `{escaped_text}`;", editor)
