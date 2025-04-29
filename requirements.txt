@@ -6,3 +6,4 @@ python-dotenv
 google-generativeai
 webdriver-manager
 schedule
+lxml-html-clean
